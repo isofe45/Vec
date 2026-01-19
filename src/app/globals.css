@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg text-white;
+}
+
+/* Nice scrollbars (Chromium) */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.20); }
+
+/* Player captions overlay */
+.cvv-captions {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+  line-height: 1.25;
+  padding: 0.2em 0.4em;
+  border-radius: 0.5em;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(6px);
+  max-width: min(92%, 980px);
+  text-align: center;
+}
