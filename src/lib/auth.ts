@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers'
 import bcrypt from 'bcryptjs'
 import { SignJWT, jwtVerify } from 'jose'
-import { prisma } from './prisma'
 
 const COOKIE_NAME = 'cinevault_session'
 
@@ -17,11 +16,17 @@ export type SessionUser = {
   name: string
 }
 
+async function getPrisma() {
+  const { prisma } = await import('./prisma')
+  return prisma
+}
+
 export async function signUp(data: { email: string; name: string; password: string }) {
   const email = data.email.trim().toLowerCase()
   const name = data.name.trim()
   const password = data.password
 
+  const prisma = await getPrisma()
   const exists = await prisma.user.findUnique({ where: { email } })
   if (exists) {
     return { ok: false, error: 'Email already registered' as const }
@@ -39,6 +44,7 @@ export async function signUp(data: { email: string; name: string; password: stri
 
 export async function signIn(data: { email: string; password: string }) {
   const email = data.email.trim().toLowerCase()
+  const prisma = await getPrisma()
   const user = await prisma.user.findUnique({ where: { email } })
   if (!user) return { ok: false, error: 'Invalid email or password' as const }
 
